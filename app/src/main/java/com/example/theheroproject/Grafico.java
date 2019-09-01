@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +31,6 @@ import java.util.Map;
 public class Grafico extends AppCompatActivity {
 
     public BarChart graficoBarras;
-    private RequestQueue ListaRequest = null;
     private LinearLayout contenedorHeroes;
     private Map<String, TextView> heroes;
     TextView txtName, txtFName;
@@ -46,13 +43,13 @@ public class Grafico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grafico);
         heroes = new HashMap<String, TextView>();
-        ListaRequest = Volley.newRequestQueue(this);
 
         mQueue = Volley.newRequestQueue(this);
 
         txtName = findViewById(R.id.txtName);
         txtFName = findViewById(R.id.txtFName);
 
+        // Se obtiene el id del heroe de la pantalla anterior
         Intent registros = getIntent();
         this.id_hero = (String)registros.getExtras().get("id_hero");
 
@@ -61,6 +58,10 @@ public class Grafico extends AppCompatActivity {
     }
 
 
+    /*
+    Función donde se referencia al gráfico de baras y se le setean
+    todas las propiedades que queramos
+     */
     public void iniciarGrafico() {
         graficoBarras = findViewById(R.id.barChart);
         graficoBarras.getDescription().setEnabled(false);
@@ -76,6 +77,9 @@ public class Grafico extends AppCompatActivity {
         graficoBarras.getLegend().setEnabled(false);
     }
 
+    /* Función que recibe el id del heroe, para hacer un get request al backend donde
+    se encuentra la información del heroe y  lo devuelve en fomato JSON.
+     */
     public void obtenerDatos(String id){
 
         String url = "https://www.superheroapi.com/api.php/2167533850019629/"+id;
@@ -98,7 +102,10 @@ public class Grafico extends AppCompatActivity {
 
                             JSONObject resultado = response.getJSONObject("powerstats");
 
-
+                            /*
+                            Se llama a la función que actualiza el gráfico y se le envia
+                            el JSONObject con los powerstats del heroe
+                             */
                             actualizarGrafico(resultado);
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -116,8 +123,10 @@ public class Grafico extends AppCompatActivity {
 
     }
 
+    /*
+    Función que obtiene los valores en X y Y para llenar el grafico
+     */
     private void actualizarGrafico(JSONObject heroes){
-        JSONObject registro_temp;
         String inteligencia;
         String strength;
         String velocidad;
@@ -129,6 +138,11 @@ public class Grafico extends AppCompatActivity {
 
         try{
 
+            /*
+            Del JSONObject obtenemos las variables que queremos mostrar y añadimos
+            al ArrayList de BarEntrys. El BarEntry tiene los valores de X y valores en
+            Y que es el valor obtenido de las distintas caracteristicas del heroe
+             */
             inteligencia = heroes.getString("intelligence");
             strength = heroes.getString("strength");
             velocidad = heroes.getString("speed");
@@ -146,11 +160,16 @@ public class Grafico extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         System.out.println(dato_heroe);
+
+        //Se llama a la funcion que llena el grafico con el ArrayList lleno
         llenarGrafico(dato_heroe);
     }
 
+    /*
+    Función que recibe el ArrayList con los valores de X y Y para llenar el
+    gráfico de barras
+     */
     private void llenarGrafico(ArrayList<BarEntry> dato_heroe){
         BarDataSet heroesDataSet;
 
@@ -171,8 +190,5 @@ public class Grafico extends AppCompatActivity {
             graficoBarras.setFitBars(true);
         }
         graficoBarras.invalidate();
-
     }
-
-
 }

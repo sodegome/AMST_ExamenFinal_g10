@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!--Grafico de barras donde van a mostrar las habilidades
+    de cada superheroe-->
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"

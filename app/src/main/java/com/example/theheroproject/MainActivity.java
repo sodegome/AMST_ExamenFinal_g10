@@ -8,20 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
     Button btnMostrar;
@@ -42,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         );
-
     }
 
+    /* Funcion que obtiene el valor del EditText con parte del nombre de un heroe
+    y envia esto a la nueva vista que se va abrir con la lista de
+    los superheroes que coincidan con la busqueda*/
     public void mostrarResultado(View view){
         String nombre_heroe = txtBusqueda.getText().toString();
         Intent intent = new Intent(this.getBaseContext(), Resultados.class);
@@ -52,6 +41,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-
 }

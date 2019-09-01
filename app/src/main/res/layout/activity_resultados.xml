@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- ScrollView para poder deslizarse en la pantalla y no se pierdan
+resultados que mostrar-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
@@ -13,8 +15,6 @@
     android:orientation="vertical"
     tools:context=".Resultados">
 
-
-
     <TextView
         android:id="@+id/txtNumHeroes"
         android:layout_width="match_parent"
@@ -23,6 +23,8 @@
         android:inputType="textPersonName"
         android:textSize="16sp"/>
 
+    <!--Linear layout vertical donde se van a ir agregando los TextView
+    con los nombres de los superheroes resultados de la busqueda-->
     <LinearLayout
         android:id="@+id/listHero"
         android:layout_width="match_parent"
